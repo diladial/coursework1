@@ -16,38 +16,42 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
     //the default value of a space in the hashtable.
     //will be xxx if there is no value assigned to it
-    String init = "xxx";
+    //String init = "xxx";
 
     //number of supporters in the hashtable
     int size = 0;
-    String[] table;
+    Supporter[] table;
 
     //constructor that takes in no params
     //makes an empty array with the default value 'xxx'
     public SupporterDatabaseHT() {
-        table = new String[HTS];
+        table = new Supporter[HTS];
         //a default value of xxx for an empty bucket
         for (int i = 0; i < HTS; i++) {
-            table[i] = init;
+            table[i]  = null;
         }
     }
 
     /*
      * Method used to add String's into the array
      */
-    public void addValues(String[] list) {
+    public void addValues(Supporter[] supporters) {
         int hashValue = 0;
         int probe = 1;
-        for (String string : list) {
-            hashValue = hash(string);
+        
+        for (Supporter supporter : supporters) {
             
-            if (table[hashValue].equals("xxx")) {
-                table[hashValue] = string;
+            String name = supporter.getName();
+            
+            hashValue = hash(name);
+            
+            if (table[hashValue] == null) {
+                table[hashValue] = supporter;
                 size++;
             }
             else
-                hashValue = (hash(string) + probe) % HTS;
-                table[hashValue] = string;
+                hashValue = (hash(supporter.getName()) + probe) % HTS;
+                table[hashValue] = supporter;
                 probe++;
         }
     }
@@ -62,7 +66,6 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         return (int) key.charAt(0) % HTS;
     }
 
-    
 
     @Override
     public void clear() {
