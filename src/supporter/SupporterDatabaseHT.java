@@ -41,6 +41,8 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         
         for (Supporter supporter : supporters) {
             
+            if (supporter != null) {
+            
             String name = supporter.getName();
             
             hashValue = hash(name);
@@ -53,6 +55,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
                 hashValue = (hash(supporter.getName()) + probe) % HTS;
                 table[hashValue] = supporter;
                 probe++;
+            }
         }
     }
 
@@ -75,7 +78,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     @Override
     public boolean containsName(String name) {
         int key = hash(name);
-        return table[key].equals(name);
+        return table[key].getName().equals(name);
     }
 
     @Override
@@ -115,8 +118,11 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
      prints the table
      */
     public void printTable() {
+        
         for (int i = 0; i < HTS; i++) {
-            System.out.println("Words at position " + i + ": " + table[i]);
+            if (table[i] != null) {
+            System.out.println("Words at position " + i + ": " + table[i].getName());
+            }
         }
     }
 
