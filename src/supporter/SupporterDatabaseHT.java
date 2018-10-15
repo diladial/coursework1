@@ -17,7 +17,6 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     //the default value of a space in the hashtable.
     //will be xxx if there is no value assigned to it
     //String init = "xxx";
-
     //number of supporters in the hashtable
     int size = 0;
     Supporter[] table;
@@ -28,7 +27,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         table = new Supporter[HTS];
         //a default value of xxx for an empty bucket
         for (int i = 0; i < HTS; i++) {
-            table[i]  = null;
+            table[i] = null;
         }
     }
 
@@ -38,23 +37,25 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     public void addValues(Supporter[] supporters) {
         int hashValue = 0;
         int probe = 1;
-        
+
         for (Supporter supporter : supporters) {
-            
+
             if (supporter != null) {
-            
-            String name = supporter.getName();
-            
-            hashValue = hash(name);
-            
-            if (table[hashValue] == null) {
-                table[hashValue] = supporter;
-                size++;
-            }
-            else
-                hashValue = (hash(supporter.getName()) + probe) % HTS;
-                table[hashValue] = supporter;
-                probe++;
+
+                String name = supporter.getName();
+
+                hashValue = hash(name);
+
+                if (table[hashValue] == null) {
+                    table[hashValue] = supporter;
+                    size++;
+                } else {
+                    hashValue = (hash(supporter.getName()) + probe) % HTS;
+                    table[hashValue] = supporter;
+                    size++;
+                    probe++;
+                }
+
             }
         }
     }
@@ -69,16 +70,29 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         return (int) key.charAt(0) % HTS;
     }
 
-
     @Override
     public void clear() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
+    //this is broken - doesn't find anythign
     public boolean containsName(String name) {
         int key = hash(name);
-        return table[key].getName().equals(name);
+        int probe = 1;
+
+        while (table[key] != null) {
+
+            if (table[key].equals(name)) {
+                return true;
+
+            } else {
+
+                key = (key + probe) % HTS;
+                probe++;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -105,23 +119,23 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     public Supporter remove(String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     /*
-    needs to print in apphabetical order
-    */
+     needs to print in apphabetical order
+     */
     @Override
     public void printSupportersOrdered() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     /*
      prints the table
      */
     public void printTable() {
-        
+
         for (int i = 0; i < HTS; i++) {
             if (table[i] != null) {
-            System.out.println("Words at position " + i + ": " + table[i].getName());
+                System.out.println("Words at position " + i + ": " + table[i].getName());
             }
         }
     }
