@@ -14,15 +14,11 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     //hash table size
     final int HTS = 10;
 
-    //the default value of a space in the hashtable.
-    //will be xxx if there is no value assigned to it
-    //String init = "xxx";
     //number of supporters in the hashtable
     int size = 0;
     Supporter[] table;
 
     //constructor that takes in no params
-    //makes an empty array with the default value 'xxx'
     public SupporterDatabaseHT() {
         table = new Supporter[HTS];
         //a default value of xxx for an empty bucket
@@ -76,28 +72,55 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     }
 
     @Override
-    //this is broken - doesn't find anythign
+    /*
+     returns a boolean if the name is found in hashtable
+     - get name - hashes - if not found in key, then probe - then look again
+     */
     public boolean containsName(String name) {
         int key = hash(name);
         int probe = 1;
+        
+        /* second attempt
+        if (table[key].getName().equals(name)) {
+                return true;
+            }
+        
+        else {
+            key = (key + probe) % HTS;
+            return false;
+        }
+        */
+        
+        
+        
+        for (Supporter supporter : table) {
+            
+        }
 
         while (table[key] != null) {
 
-            if (table[key].equals(name)) {
+            if (table[key].getName().equals(name)) {
                 return true;
 
             } else {
 
                 key = (key + probe) % HTS;
-                probe++;
+
+                if (table[key] != null && table[key].getName().equals(name)) {
+                    return true;
+                } else {
+                    probe++;
+                }
             }
         }
         return false;
+        
     }
 
     @Override
     public Supporter get(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int key = hash(name);
+        return table[key];
     }
 
     @Override
