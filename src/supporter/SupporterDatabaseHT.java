@@ -28,42 +28,23 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     }
 
     /*
-     * Method used to add String's into the array
-     */
-    public void addValues(Supporter[] supporters) {
-        int hashValue = 0;
-        int probe = 1;
-
-        for (Supporter supporter : supporters) {
-
-            if (supporter != null) {
-
-                String name = supporter.getName();
-
-                hashValue = hash(name);
-
-                if (table[hashValue] == null) {
-                    table[hashValue] = supporter;
-                    size++;
-                } else {
-                    hashValue = (hash(supporter.getName()) + probe) % HTS;
-                    table[hashValue] = supporter;
-                    size++;
-                    probe++;
-                }
-
-            }
-        }
-    }
-
-    /*
      a method to hash the given value in a string
      returning the position for the value
      to be used in the hashtable
      NOTE: STILL USES  A REALLY DUMB HASH!!
      */
     public int hash(String key) {
-        return (int) key.charAt(0) % HTS;
+        //return (int) key.charAt(3) % HTS;
+        int g = 3;
+        int hash = 0;
+        for (int i = 0; i < key.length(); i++){
+            hash = g * (hash + key.charAt(i));
+        }
+        return hash % HTS;
+    }
+    
+    public int probe(int i){
+        return i*i;
     }
 
     @Override
@@ -91,11 +72,6 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         }
         */
         
-        
-        
-        for (Supporter supporter : table) {
-            
-        }
 
         while (table[key] != null) {
 
@@ -135,7 +111,66 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
     @Override
     public Supporter put(Supporter supporter) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String name = supporter.getName();
+        int hash = hash(name);
+        int probe = 0;
+        
+        //when i = 0
+        if (table[hash] == null) {
+        table[hash] = supporter;
+        size++;
+        return null;
+        }
+        
+        probe = hash + 1;
+        
+        while (probe != hash) {
+            
+            if (table[probe] == null){
+                table[probe] = supporter;
+                size++;
+                return null;
+            }
+                
+            else {
+                probe = probe + 1;
+            }
+            if (probe == HTS)
+                probe = 0;
+            System.out.println(probe);
+        }
+        
+        /*
+        //when i > 0
+        int i = 1;
+        //while the spot is taken
+        while (table[hash] != null) { 
+            //add the probe to the current space
+            newKey  = ((hash + i*i) % HTS); 
+            newKey = 2;
+            //look in the new space if its filled or not
+            if (table[newKey] != null){
+                //assign it a new supporter
+                table[newKey] = supporter;
+            }
+            //if the spot is filled, i++
+            i++;
+            System.out.println(i);
+        }
+        return null;
+        */
+        /**
+         if (table[hash] != null) {
+            
+            Supporter oldSupporter = table[hash];
+            table[hash] = supporter;
+            
+            size++;
+            size--;
+            return oldSupporter;
+        }
+        return null;
+        * **/return null;
     }
 
     @Override
@@ -148,14 +183,6 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
      */
     @Override
     public void printSupportersOrdered() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /*
-     prints the table
-     */
-    public void printTable() {
-
         for (int i = 0; i < HTS; i++) {
             if (table[i] != null) {
                 System.out.println("Words at position " + i + ": " + table[i].getName());
@@ -164,3 +191,4 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     }
 
 }
+   
