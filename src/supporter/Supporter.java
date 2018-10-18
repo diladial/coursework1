@@ -13,6 +13,7 @@ public class Supporter implements ISupporter {
 
     private String ID;
     private String name;
+    private boolean deleted;
     
     public Supporter(){
         
@@ -21,6 +22,7 @@ public class Supporter implements ISupporter {
     public Supporter(String ID, String name) {
         this.ID = ID;
         this.name = name;
+        this.deleted = false;
     }
     
     @Override
@@ -31,6 +33,14 @@ public class Supporter implements ISupporter {
     @Override
     public String getName() {
         return name;
+    }
+
+    public void setDeleted() {
+        deleted = true;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
     
     

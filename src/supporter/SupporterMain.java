@@ -18,48 +18,24 @@ public class SupporterMain {
         //create a new hashtable, empty
         SupporterDatabaseHT hashtable = new SupporterDatabaseHT();
 
-        //create an array of strings to be inserted
-        //String[] stringArray = {"hello","i love you","you are worth it","come here","i miss you","ok"};
-        //String[] stringArray = {"apple","banana","carrots","donuts","eggplant"};
-        Supporter[] supporters = new Supporter[10];
-
         Supporter john = new Supporter("123", "John");
         Supporter jane = new Supporter("234", "Jane");
         Supporter jack = new Supporter("345", "Jack");
-        Supporter yunus = new Supporter("354", "Ackj");
-        Supporter yunushadi = new Supporter("354", "yunushadi");
+        Supporter joseph = new Supporter("354", "Joseph");
+        Supporter yunushadi = new Supporter("3354", "yunushadi");
 
-        //supporters[0] = john;
-        //supporters[1] = jane;
-        //supporters[2] = jack;
 
-        //System.out.println(supporters[2].getName());
+        //add these supporters to the database
 
-       //for (Supporter supporter : supporters) {
-        //System.out.println("supporter name: " + supporter.getName());
-        //}
-        //add values into the hashtable
-        //hashtable.addValues(supporters);
-        
         hashtable.put(john);
         hashtable.put(jane);
         hashtable.put(jack);
-        hashtable.put(yunus);
+        hashtable.put(joseph);
         hashtable.put(yunushadi);
-        
-        //System.out.println(hashtable.put(yunushadi).getName());
 
         //print the hashtable
         hashtable.printSupportersOrdered();
         System.out.println();
-
-        //test the containsName method
-        for (Supporter supporter : supporters) {
-            if (supporter != null) {
-                System.out.println("does the supporter " + supporter.getName() + " exist? " + hashtable.containsName(supporter.getName()));
-
-            }
-        }
 
         //test for size()
         System.out.println("how many things in your hashtable? " + hashtable.size());
@@ -73,8 +49,25 @@ public class SupporterMain {
         System.out.println("can you get the supporter John? " + hashtable.get("John") + " ... What's his name? " + hashtable.get("John").getName());
         System.out.println("can you get the supporter Jane? " + hashtable.get("Jane") + " ... What's his name? " + hashtable.get("Jane").getName());
         System.out.println("can you get the supporter Jack? " + hashtable.get("Jack") + " ... What's his name? " + hashtable.get("Jack").getName());
-        System.out.println("can you get the supporter Jack? " + hashtable.get("yunushadi") + " ... What's his name? " + hashtable.get("yunushadi").getName());
+        System.out.println("can you get the supporter Joseph? " + hashtable.get("Joseph") + " ... What's his name? " + hashtable.get("Joseph").getName());
+        System.out.println("can you get the supporter yunushadi? " + hashtable.get("yunushadi") + " ... What's his name? " + hashtable.get("yunushadi").getName());
+        System.out.println();
 
+        //test for containsName()
+        System.out.println("Is John present in the hash table? "+ hashtable.containsName("John"));
+        System.out.println("Is Jane present in the hash table? "+ hashtable.containsName("Jane"));
+        System.out.println("Is Jack present in the hash table? "+ hashtable.containsName("Jack"));
+        System.out.println("Is Joseph present in the hash table? "+ hashtable.containsName("Joseph"));
+        System.out.println("Is yunushadi present in the hash table? "+ hashtable.containsName("yunushadi"));
+
+
+        //what's the load factor
+        System.out.println(hashtable.getLoadFactor());
+
+        //test for clear
+        System.out.println("Clearing the hashtable...");
+        hashtable.clear();
+        hashtable.printSupportersOrdered();
     }
 
 }

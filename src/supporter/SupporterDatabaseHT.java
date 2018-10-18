@@ -18,6 +18,9 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     int size = 0;
     Supporter[] table;
 
+    //load factor
+    double loadFactor = 0;
+
     //constructor that takes in no params
     public SupporterDatabaseHT() {
         table = new Supporter[HTS];
@@ -35,10 +38,10 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
      */
     public int hash(String key) {
         //return (int) key.charAt(3) % HTS;
-        int g = 3;
+        int y = 7;
         int hash = 0;
         for (int i = 0; i < key.length(); i++){
-            hash = g * (hash + key.charAt(i));
+            hash = y * (hash + key.charAt(i));
         }
         return hash % HTS;
     }
@@ -49,7 +52,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        table = new Supporter[HTS];
     }
 
     @Override
@@ -60,18 +63,6 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     public boolean containsName(String name) {
         int key = hash(name);
         int probe = 1;
-        
-        /* second attempt
-        if (table[key].getName().equals(name)) {
-                return true;
-            }
-        
-        else {
-            key = (key + probe) % HTS;
-            return false;
-        }
-        */
-        
 
         while (table[key] != null) {
 
@@ -95,14 +86,14 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
     @Override
     public Supporter get(String name) {
-        int hash = hash(name);
+        int key = hash(name);
         int probe = 0;
-        if (table[hash].getName().equals(name))
-                return table[hash];
+        if (table[key].getName().equals(name))
+                return table[key];
         else {
-            probe = hash + 1;
+            probe = key + 1;
             
-            while (probe != hash){
+            while (probe != key){
                 if (table[probe].getName().equals(name))
                     return table[probe];
                 else
@@ -125,22 +116,23 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     @Override
     public Supporter put(Supporter supporter) {
         String name = supporter.getName();
-        int hash = hash(name);
+        int key = hash(name);
         int probe = 0;
-        
-        //
-        if (table[hash] == null) {
-        table[hash] = supporter;
+
+        if (table[key] == null) {
+        table[key] = supporter;
         size++;
+        System.out.println(getLoadFactor());
         return null;
         }
         
-        probe = hash + 1;
+        probe = key + 1;
         
-        while (probe != hash) {
+        while (probe != key) {
             
             if (table[probe] == null){
                 table[probe] = supporter;
+                System.out.println(getLoadFactor());
                 size++;
                 return supporter;
             }
@@ -152,38 +144,8 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
                 probe = 0;
             System.out.println(probe);
         }
-        
-        /*
-        //when i > 0
-        int i = 1;
-        //while the spot is taken
-        while (table[hash] != null) { 
-            //add the probe to the current space
-            newKey  = ((hash + i*i) % HTS); 
-            newKey = 2;
-            //look in the new space if its filled or not
-            if (table[newKey] != null){
-                //assign it a new supporter
-                table[newKey] = supporter;
-            }
-            //if the spot is filled, i++
-            i++;
-            System.out.println(i);
-        }
-        return null;
-        */
-        /**
-         if (table[hash] != null) {
-            
-            Supporter oldSupporter = table[hash];
-            table[hash] = supporter;
-            
-            size++;
-            size--;
-            return oldSupporter;
-        }
-        return null;
-        * **/return supporter;
+
+        return supporter;
     }
 
     @Override
@@ -192,7 +154,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     }
 
     /*
-     needs to print in apphabetical order
+     needs to print in alpabetical order
      */
     @Override
     public void printSupportersOrdered() {
@@ -201,6 +163,11 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
                 System.out.println("Words at position " + i + ": " + table[i].getName());
             }
         }
+    }
+
+    public double getLoadFactor() {
+        loadFactor = ((double) size / (double) HTS);
+        return loadFactor;
     }
 
 }
