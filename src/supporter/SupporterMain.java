@@ -26,21 +26,31 @@ public class SupporterMain {
         Supporter john = new Supporter("123", "John");
         Supporter jane = new Supporter("234", "Jane");
         Supporter jack = new Supporter("345", "Jack");
+        Supporter yunus = new Supporter("354", "Ackj");
+        Supporter yunushadi = new Supporter("354", "yunushadi");
 
-        supporters[0] = john;
-        supporters[1] = jane;
-        supporters[2] = jack;
+        //supporters[0] = john;
+        //supporters[1] = jane;
+        //supporters[2] = jack;
 
-        System.out.println(supporters[2].getName());
+        //System.out.println(supporters[2].getName());
 
        //for (Supporter supporter : supporters) {
         //System.out.println("supporter name: " + supporter.getName());
         //}
         //add values into the hashtable
-        hashtable.addValues(supporters);
+        //hashtable.addValues(supporters);
+        
+        hashtable.put(john);
+        hashtable.put(jane);
+        hashtable.put(jack);
+        hashtable.put(yunus);
+        hashtable.put(yunushadi);
+        
+        //System.out.println(hashtable.put(yunushadi).getName());
 
         //print the hashtable
-        hashtable.printTable();
+        hashtable.printSupportersOrdered();
         System.out.println();
 
         //test the containsName method
@@ -53,9 +63,17 @@ public class SupporterMain {
 
         //test for size()
         System.out.println("how many things in your hashtable? " + hashtable.size());
-
+        System.out.println();
+        
         //test for isSEmpty()
         System.out.println("is your hashtable empty? " + hashtable.isEmpty());
+        System.out.println();
+        
+        //test for get()
+        System.out.println("can you get the supporter John? " + hashtable.get("John") + " ... What's his name? " + hashtable.get("John").getName());
+        System.out.println("can you get the supporter Jane? " + hashtable.get("Jane") + " ... What's his name? " + hashtable.get("Jane").getName());
+        System.out.println("can you get the supporter Jack? " + hashtable.get("Jack") + " ... What's his name? " + hashtable.get("Jack").getName());
+        System.out.println("can you get the supporter Jack? " + hashtable.get("yunushadi") + " ... What's his name? " + hashtable.get("yunushadi").getName());
 
     }
 
