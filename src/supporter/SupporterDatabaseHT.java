@@ -95,8 +95,21 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
     @Override
     public Supporter get(String name) {
-        int key = hash(name);
-        return table[key];
+        int hash = hash(name);
+        int probe = 0;
+        if (table[hash].getName().equals(name))
+                return table[hash];
+        else {
+            probe = hash + 1;
+            
+            while (probe != hash){
+                if (table[probe].getName().equals(name))
+                    return table[probe];
+                else
+                    probe++;
+            }
+        }
+        return null;  
     }
 
     @Override
@@ -115,7 +128,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         int hash = hash(name);
         int probe = 0;
         
-        //when i = 0
+        //
         if (table[hash] == null) {
         table[hash] = supporter;
         size++;
@@ -129,7 +142,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
             if (table[probe] == null){
                 table[probe] = supporter;
                 size++;
-                return null;
+                return supporter;
             }
                 
             else {
@@ -170,7 +183,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
             return oldSupporter;
         }
         return null;
-        * **/return null;
+        * **/return supporter;
     }
 
     @Override
