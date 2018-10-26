@@ -23,6 +23,8 @@ public class SupporterMain {
         Supporter jack = new Supporter("345", "Jack");
         Supporter joseph = new Supporter("354", "Joseph");
         Supporter yunushadi = new Supporter("3354", "yunushadi");
+        Supporter dila = new Supporter("543","Dila");
+        Supporter green = new Supporter("543","green");
 
 
         //add these supporters to the database
@@ -32,6 +34,8 @@ public class SupporterMain {
         hashtable.put(jack);
         hashtable.put(joseph);
         hashtable.put(yunushadi);
+        hashtable.put(dila);
+        hashtable.put(green);
 
         //print the hashtable
         hashtable.printSupportersOrdered();
@@ -46,12 +50,15 @@ public class SupporterMain {
         System.out.println();
         
         //test for get()
+
         System.out.println("can you get the supporter John? " + hashtable.get("John") + " ... What's his name? " + hashtable.get("John").getName());
         System.out.println("can you get the supporter Jane? " + hashtable.get("Jane") + " ... What's his name? " + hashtable.get("Jane").getName());
         System.out.println("can you get the supporter Jack? " + hashtable.get("Jack") + " ... What's his name? " + hashtable.get("Jack").getName());
         System.out.println("can you get the supporter Joseph? " + hashtable.get("Joseph") + " ... What's his name? " + hashtable.get("Joseph").getName());
         System.out.println("can you get the supporter yunushadi? " + hashtable.get("yunushadi") + " ... What's his name? " + hashtable.get("yunushadi").getName());
+        System.out.println("can you get the supporter yellow? " + hashtable.get("yellow"));
         System.out.println();
+
 
         //test for containsName()
         System.out.println("Is John present in the hash table? "+ hashtable.containsName("John"));
@@ -59,6 +66,8 @@ public class SupporterMain {
         System.out.println("Is Jack present in the hash table? "+ hashtable.containsName("Jack"));
         System.out.println("Is Joseph present in the hash table? "+ hashtable.containsName("Joseph"));
         System.out.println("Is yunushadi present in the hash table? "+ hashtable.containsName("yunushadi"));
+        System.out.println("Is green present in the hash table? "+ hashtable.containsName("green"));
+        System.out.println("Is yellow present in the hash table? "+ hashtable.containsName("yellow"));
 
 
         //what's the load factor
