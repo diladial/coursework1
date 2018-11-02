@@ -12,7 +12,7 @@ package supporter;
 public class SupporterDatabaseHT implements ISupporterDatabase {
 
     //hash table size
-    private int capacity = 10;
+    private int capacity = 9;
 
     //number of supporters in the hashtable
     private int size = 0;
@@ -78,15 +78,12 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
             }
 
             System.out.println("Clash  in trying containsName() on " + name);
-            index = index + i*i;
+            index = (index + i*i) % capacity;
 
             if (table[index].getName().equals(name)){
                 return true;
             }
             i++;
-
-
-
         }
         return false;
     }
@@ -108,12 +105,19 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
             while (!table[index].getName().equals(name)) {
                 System.out.println("Clash  in trying get() on " + name);
-                index = index + i*i;
+                index = (index + i*i) % capacity;
 
                 if (table[index].getName().equals(name)){
                     return table[index];
                 }
+
+                if (table[index] == null){
+                    System.out.println("not found: " + name);
+                    return null;
+                }
                 i++;
+
+
 
             }
         }
