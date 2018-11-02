@@ -53,10 +53,15 @@ public class SupporterMain {
 
         //test for get()
         System.out.println("can you get the supporter John? " + database.get("John") + " ... What's his name? " + database.get("John").getName());
+        System.out.println();
         System.out.println("can you get the supporter Jane? " + database.get("Jane") + " ... What's his name? " + database.get("Jane").getName());
+        System.out.println();
         System.out.println("can you get the supporter Jack? " + database.get("Jack") + " ... What's his name? " + database.get("Jack").getName());
+        System.out.println();
         System.out.println("can you get the supporter Joseph? " + database.get("Joseph") + " ... What's his name? " + database.get("Joseph").getName());
+        System.out.println();
         System.out.println("can you get the supporter yunushadi? " + database.get("Yunushadi") + " ... What's his name? " + database.get("Yunushadi").getName());
+        System.out.println();
         System.out.println("can you get the supporter yellow? " + database.get("yellow"));
         System.out.println();
 
@@ -70,7 +75,7 @@ public class SupporterMain {
         System.out.println("Is yunushadi present in the hash table? "+ database.containsName("Yunushadi"));
         System.out.println("Is green present in the hash table? "+ database.containsName("Green"));
         System.out.println("Is yellow present in the hash table? "+ database.containsName("yellow"));
-
+        System.out.println();
 
         //what's the load factor - ONLY FOR database
         //System.out.println(database.getLoadFactor());
