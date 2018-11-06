@@ -44,7 +44,7 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         if (s != null) {
             System.out.println("ID of supporter is: " + s.getID());
         }
-        System.out.println("Number of filled nodes visited " + (numberOfNodes(root,name)));
+        System.out.println("Number of filled nodes visited: " + (numberOfNodes(root,name)));
         return s;
     }
 
@@ -104,7 +104,6 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         root = put(root,supporter);
         System.out.println("Depth is now at: " + depth());
         System.out.println("Size of binary search tree is now: " + size());
-        System.out.println("using the getSize() method: " + getSize());
         System.out.println("Number of filled nodes visited " + (numberOfNodes(root,supporter.getName()) -1));
         System.out.println();
         return supporter;
@@ -115,7 +114,7 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         int numberOfVisited = 0;
         if (node == null) {
             node = new Node(supporter);
-            size++;
+            //size++;
             System.out.println("Number of nodes visited: " + numberOfVisited);
         }
          else if (name.compareToIgnoreCase(node.getSupporter().getName()) < 0) {
@@ -151,8 +150,43 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
 
     @Override
     public Supporter remove(String name) {
-        return null;
+        //return remove(root,name);
+        return remove(root,name).getSupporter();
     }
+
+    private Node remove(Node node, String name){
+        if (node == null)
+            return null;
+        else if (name.compareToIgnoreCase(node.getSupporter().getName()) < 0){
+            node.left = remove(node.left,name);
+        } else if (name.compareToIgnoreCase(node.getSupporter().getName()) > 0){
+            node.right = remove(node.right,name);
+        } else if (node.left != null && node.right != null){ //if the node has two children
+            node.supporter = findMin(node.right).supporter; //give the node the most right child's supporter
+            node.right = remove(node.right,name); //change the link of node.right pointing to the right node
+            //why am i getting a double eric?
+        } else
+            //node = (node.left != null) ? node.left :node.right;
+                if (node.left != null){
+                    node = node.left;
+                } else
+                    node = node.right;
+        return node;
+    }
+
+    //the smallest node will always be on the very left position
+    //this is because of the properties of BSTs
+    //everything on the left is smaller than the current node,
+    //if node.left is empty then the node itself is the smallest node in that subtree
+    private Node findMin(Node node){
+        if(node == null)
+            return null;
+        else if (node.left == null)
+            return node;
+        return findMin(node);
+    }
+
+
 
     @Override
     public void printSupportersOrdered() {
