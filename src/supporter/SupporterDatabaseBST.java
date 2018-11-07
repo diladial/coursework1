@@ -147,7 +147,14 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         return size;
     }
 
+    /*
 
+    question:
+    1- why isn't there a thing that does the .equals thing, how do we know
+    we reached the correct node?
+    2 - why am i getting a duplicate of a node i deleted?
+
+     */
     @Override
     public Supporter remove(String name) {
         //return remove(root,name);
@@ -157,16 +164,20 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
     private Node remove(Node node, String name){
         if (node == null)
             return null;
+        //finding the right node with the name
         else if (name.compareToIgnoreCase(node.getSupporter().getName()) < 0){
             node.left = remove(node.left,name);
         } else if (name.compareToIgnoreCase(node.getSupporter().getName()) > 0){
             node.right = remove(node.right,name);
+
+
         } else if (node.left != null && node.right != null){ //if the node has two children
             node.supporter = findMin(node.right).supporter; //give the node the most right child's supporter
             node.right = remove(node.right,name); //change the link of node.right pointing to the right node
             //why am i getting a double eric?
         } else
             //node = (node.left != null) ? node.left :node.right;
+            //if the node has one child
                 if (node.left != null){
                     node = node.left;
                 } else

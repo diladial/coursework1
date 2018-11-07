@@ -42,6 +42,8 @@ public class Supporter implements ISupporter {
     public boolean isDeleted() {
         return deleted;
     }
+
+    public void setNotDeleted() { deleted = false; }
     
     
     

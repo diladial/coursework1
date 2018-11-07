@@ -23,8 +23,8 @@ public class SupporterMain {
 
 
         //create a new database, empty
-        //SupporterDatabaseHT database = new SupporterDatabaseHT();
-        SupporterDatabaseBST database = new SupporterDatabaseBST();
+        SupporterDatabaseHT database = new SupporterDatabaseHT();
+        //SupporterDatabaseBST database = new SupporterDatabaseBST();
 
         Supporter giulia = new Supporter("123", "Giulia");
         Supporter ben = new Supporter("234", "Ben");
@@ -50,26 +50,26 @@ public class SupporterMain {
         System.out.println();
 
         //test for size()
-        System.out.println("how many things in your database? " + database.size());
+        System.out.println("How many things in your database? " + database.size());
         System.out.println();
         
         //test for isSEmpty()
-        System.out.println("is your database empty? " + database.isEmpty());
+        System.out.println("Is your database empty? " + database.isEmpty());
         System.out.println();
 
 
         //test for get()
-        System.out.println("can you get the supporter Giulia? " + database.get("Giulia"));
+        System.out.println("Can you get the supporter Giulia? " + database.get("Giulia"));
         System.out.println();
-        System.out.println("can you get the supporter Ben? " + database.get("Ben"));
+        System.out.println("Can you get the supporter Ben? " + database.get("Ben"));
         System.out.println();
-        System.out.println("can you get the supporter Alex? " + database.get("Alex"));
+        System.out.println("Can you get the supporter Alex? " + database.get("Alex"));
         System.out.println();
-        System.out.println("can you get the supporter Eric? " + database.get("Eric"));
+        System.out.println("Can you get the supporter Eric? " + database.get("Eric"));
         System.out.println();
-        System.out.println("can you get the supporter Harry? " + database.get("Harry"));
+        System.out.println("Can you get the supporter Harry? " + database.get("Harry"));
         System.out.println();
-        System.out.println("can you get the supporter yellow? " + database.get("yellow"));
+        System.out.println("Can you get the supporter yellow? " + database.get("yellow"));
         System.out.println();
 
 
@@ -87,11 +87,13 @@ public class SupporterMain {
         //what's the load factor - ONLY FOR HASHTABLE
         //System.out.println(database.getLoadFactor());
 
+        /*
         //what's the depth
         System.out.println("Depth is at: " + database.depth());
         System.out.println("size() is at: " + database.size());
         System.out.println("getSize() is at: " + database.getSize());
         System.out.println();
+        */
 
         /*
         //test for remove
@@ -106,40 +108,54 @@ public class SupporterMain {
         System.out.println("size() is at: " + database.size());
         System.out.println("getSize() is at: " + database.getSize());
         System.out.println();
-        */
+
 
         //clear
-        System.out.println("Removing supporter Alex");
-        database.remove("Alex");
+        //database.remove("Alex");
 
         //print
         database.printSupportersOrdered();
-        System.out.println("Depth is at: " + database.depth());
+        //System.out.println("Depth is at: " + database.depth());
         System.out.println("size() is at: " + database.size());
         System.out.println();
+        */
 
-        System.out.println("Is Alex present in the hash table? "+ database.containsName("Alex"));
 
-        System.out.println("Adding supporter Tom...");
 
         Supporter tom = new Supporter("467","Tom");
         database.put(tom);
 
 
-        //print
-        database.printSupportersOrdered();
-        System.out.println("Depth is at: " + database.depth());
-        System.out.println("size() is at: " + database.size());
-        System.out.println();
-
-        System.out.println("Adding Alex back in...");
-        database.put(alex);
 
         //print
         database.printSupportersOrdered();
-        System.out.println("Depth is at: " + database.depth());
+        //System.out.println("Depth is at: " + database.depth());
         System.out.println("size() is at: " + database.size());
         System.out.println();
+
+        //System.out.println("Removing supporter Alex");
+        database.remove("Alex");
+
+        System.out.println("Is Alex present in the hash table? "+ database.containsName("Alex"));
+
+
+        System.out.println();
+        Supporter luke = new Supporter("465","Luke");
+        database.put(luke);
+
+        System.out.println("Adding supporter Hannah...");
+        Supporter hannah = new Supporter("367","Hannah");
+        database.put(hannah);
+
+        //print
+        database.printSupportersOrdered();
+        //System.out.println("Depth is at: " + database.depth());
+        System.out.println("Size of the table is: " + database.size());
+        System.out.println();
+
+        //rehash
+
+
 
 
         //clearing database
@@ -151,7 +167,7 @@ public class SupporterMain {
         System.out.println();
 
         //what's the depth
-        System.out.println("Depth is at: " + database.depth());
+        //System.out.println("Depth is at: " + database.depth());
     }
 
 }
