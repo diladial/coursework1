@@ -23,8 +23,8 @@ public class SupporterMain {
 
 
         //create a new database, empty
-        SupporterDatabaseHT database = new SupporterDatabaseHT();
-        //SupporterDatabaseBST database = new SupporterDatabaseBST();
+        //SupporterDatabaseHT database = new SupporterDatabaseHT();
+        SupporterDatabaseBST database = new SupporterDatabaseBST();
 
         Supporter giulia = new Supporter("123", "Giulia");
         Supporter ben = new Supporter("234", "Ben");
@@ -32,7 +32,12 @@ public class SupporterMain {
         Supporter eric = new Supporter("456", "Eric");
         Supporter harry = new Supporter("567", "Harry");
         Supporter fadila = new Supporter("678","Fadila");
+        Supporter gyro = new Supporter("789","Gyro");
         Supporter green = new Supporter("789","Green");
+        Supporter gogon = new Supporter("789","Gogon");
+        //Supporter jennifer = new Supporter("345","Jennifer");
+        //Supporter chris = new Supporter("355","Chris");
+        //Supporter alice = new Supporter("355","Alice");
 
 
         //add these supporters to the database
@@ -43,7 +48,13 @@ public class SupporterMain {
         database.put(eric);
         database.put(harry);
         database.put(fadila);
+        //database.put(gogon);
         database.put(green);
+        //database.put(gyro);
+        //database.put(jennifer);
+        //database.put(chris);
+        //database.put(alice);
+
 
         //print the database
         database.printSupportersOrdered();
@@ -72,16 +83,21 @@ public class SupporterMain {
         System.out.println("Can you get the supporter yellow? " + database.get("yellow"));
         System.out.println();
 
+        //database.remove("Alice");
+
 
 
         //test for containsName()
-        System.out.println("Is Giulia present in the hash table? "+ database.containsName("Giulia"));
-        System.out.println("Is Ben present in the hash table? "+ database.containsName("Ben"));
-        System.out.println("Is Alex present in the hash table? "+ database.containsName("Alex"));
-        System.out.println("Is Eric present in the hash table? "+ database.containsName("Eric"));
-        System.out.println("Is harry present in the hash table? "+ database.containsName("Harry"));
-        System.out.println("Is green present in the hash table? "+ database.containsName("Green"));
-        System.out.println("Is yellow present in the hash table? "+ database.containsName("yellow"));
+        System.out.println("Is Giulia present in the database? "+ database.containsName("Giulia"));
+        System.out.println("Is Ben present in the database? "+ database.containsName("Ben"));
+        System.out.println("Is Alex present in the database? "+ database.containsName("Alex"));
+
+        //System.out.println("Is Alex present in the database? "+ database.containsName("Alex"));
+        System.out.println("Is Giulia present in the database? "+ database.containsName("Giulia"));
+        System.out.println("Is Eric present in the database? "+ database.containsName("Eric"));
+        System.out.println("Is harry present in the database? "+ database.containsName("Harry"));
+        System.out.println("Is green present in the database? "+ database.containsName("Green"));
+        System.out.println("Is yellow present in the database? "+ database.containsName("yellow"));
         System.out.println();
 
         //what's the load factor - ONLY FOR HASHTABLE
@@ -121,7 +137,7 @@ public class SupporterMain {
         */
 
 
-
+        /*
         Supporter tom = new Supporter("467","Tom");
         database.put(tom);
 
@@ -133,19 +149,35 @@ public class SupporterMain {
         System.out.println("size() is at: " + database.size());
         System.out.println();
 
-        //System.out.println("Removing supporter Alex");
-        database.remove("Alex");
-
-        System.out.println("Is Alex present in the hash table? "+ database.containsName("Alex"));
+        //System.out.println("Removing supporter Giulia");
+        database.remove("Giulia");
+        System.out.println("Is Ben present in the database? "+ database.containsName("Ben"));
 
 
         System.out.println();
         Supporter luke = new Supporter("465","Luke");
         database.put(luke);
 
-        System.out.println("Adding supporter Hannah...");
         Supporter hannah = new Supporter("367","Hannah");
         database.put(hannah);
+
+        Supporter viv = new Supporter("867","Viv");
+        database.put(viv);
+
+        Supporter alex1 = new Supporter("657","Alex");
+        database.put(alex1);
+
+        database.get("Alex");
+        //database.get(alex);
+
+        */
+
+        database.printSupportersOrdered();
+        System.out.println("Size of the table is: " + database.size());
+        System.out.println();
+
+        database.remove("Ben");
+
 
         //print
         database.printSupportersOrdered();

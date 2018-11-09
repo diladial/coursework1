@@ -1,10 +1,12 @@
 package supporter;
 
+/**
+ *
+ * @author fadilafidina
+ */
 public class SupporterDatabaseBST implements ISupporterDatabase {
     protected Node root;
     protected int size;
-
-
 
     public SupporterDatabaseBST() {
         root = null;
@@ -102,9 +104,9 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         System.out.println("Adding supporter: " + supporter.getName() + ", with ID: " + supporter.getID());
         //assign first supporter as the root supporter
         root = put(root,supporter);
-        System.out.println("Depth is now at: " + depth());
+        System.out.println("Depth of the binary search treee is now at: " + depth());
         System.out.println("Size of binary search tree is now: " + size());
-        System.out.println("Number of filled nodes visited " + (numberOfNodes(root,supporter.getName()) -1));
+        System.out.println("Number of filled nodes visited " + (numberOfNodes(root,supporter.getName())));
         System.out.println();
         return supporter;
     }
@@ -142,46 +144,59 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         return 0;
 
     }
-
-    public int getSize(){
-        return size;
-    }
-
+    
     /*
 
     question:
     1- why isn't there a thing that does the .equals thing, how do we know
-    we reached the correct node?
+    we reached the correct node? -- because we used if ELSE statements - if none equal
+    to what we were looking for, then the last one must be the node we want
     2 - why am i getting a duplicate of a node i deleted?
+    because i did not reset the pointer before. had
 
      */
     @Override
     public Supporter remove(String name) {
-        //return remove(root,name);
-        return remove(root,name).getSupporter();
+        System.out.println("Removing supporter " + name + "...");
+        Supporter s = remove(root,name).getSupporter();
+        System.out.println("Successfully deleted supporter " + s.getName() + " with ID " + s.getID());
+        System.out.println("Depth of the binary search treee is now at: " + depth());
+        System.out.println("Size of binary search tree is now: " + size());
+        System.out.println("Number of filled nodes visited " + (numberOfNodes(root,name)));
+        System.out.println();
+        return s;
     }
 
     private Node remove(Node node, String name){
         if (node == null)
             return null;
-        //finding the right node with the name
-        else if (name.compareToIgnoreCase(node.getSupporter().getName()) < 0){
+
+        if (name.compareToIgnoreCase(node.getSupporter().getName()) < 0)
             node.left = remove(node.left,name);
-        } else if (name.compareToIgnoreCase(node.getSupporter().getName()) > 0){
+         else if (name.compareToIgnoreCase(node.getSupporter().getName()) > 0)
             node.right = remove(node.right,name);
+        else if (node.left != null && node.right != null){
+            //node.supporter = findMin(node.right).getSupporter(); //give the node the most right child's supporter
+            //node.right = remove(node.right,node.getSupporter().getName()); //change the link of node.right pointing to the right node
+        Node t = node;
+        node = findMin(t.right);
+        node.right = remove(node.right,node.getSupporter().getName());
+        node.left = t.left;
 
+        } else {
+            if (node.left == null) {
+                node = node.right;
+            } if (node.right == null) {
+                node = node.left;
+            }
+        }
+        return node;
+    }
 
-        } else if (node.left != null && node.right != null){ //if the node has two children
-            node.supporter = findMin(node.right).supporter; //give the node the most right child's supporter
-            node.right = remove(node.right,name); //change the link of node.right pointing to the right node
-            //why am i getting a double eric?
-        } else
-            //node = (node.left != null) ? node.left :node.right;
-            //if the node has one child
-                if (node.left != null){
-                    node = node.left;
-                } else
-                    node = node.right;
+    private Node deleteMin(Node node) {
+        if (node.left == null)
+            return node.right;
+        node.left = deleteMin(node.left);
         return node;
     }
 
@@ -194,7 +209,7 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
             return null;
         else if (node.left == null)
             return node;
-        return findMin(node);
+        return findMin(node.left);
     }
 
 
@@ -204,6 +219,9 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         System.out.println("- - - - - -");
         System.out.println("Printing supporters: ");
         printSupporters(root);
+        System.out.println("Size of the binary search tree is now: " + size());
+        System.out.println("Depth of the binary search tree is: " + depth());
+        System.out.println();
     }
 
     public void printSupporters(Node node){

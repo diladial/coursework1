@@ -43,10 +43,6 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         }
         return hash % capacity;
     }
-    
-    public int probe(int i){
-        return i*i;
-    }
 
     @Override
     public void clear() {
@@ -66,25 +62,31 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
         if (table[index] == null) {
             System.out.println("Name " + name + " is not in table.");
+            System.out.println();
             return false;
         }
 
         if (table[index].getName().equals(name) && !table[index].isDeleted())
             return true;
 
-        while (!table[index].getName().equals(name)){
+        if (table[index] != null) {
+            while (table[index] != null && !table[index].getName().equals(name)) {
 
-            if (table[index] == null){ //no name has been found
-                return false;
+                if (table[index] == null) { //no name has been found
+                    return false;
+                }
+
+                System.out.println("Clash  in trying containsName() on " + name);
+                index = (index + i * i) % capacity;
+
+                if (table[index] != null) {
+                    if (table[index].getName().equals(name) && !table[index].isDeleted()) {
+                        return true;
+                    }
+
+                    i++;
+                }
             }
-
-            System.out.println("Clash  in trying containsName() on " + name);
-            index = (index + i*i) % capacity;
-
-            if (table[index].getName().equals(name) && !table[index].isDeleted()){
-                return true;
-            }
-            i++;
         }
         return false;
     }
@@ -99,20 +101,24 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         }
 
         else if (table[index].getName().equals(name) && !table[index].isDeleted()) {
-            System.out.println("Supporter " + name + " found!");
+            System.out.println("Supporter " + name + " found with ID " + table[index].getID());
+            System.out.println();
             return table[index];
         }
         else {
 
             while (!table[index].getName().equals(name)) {
-                System.out.println("Clash  in trying get() on " + name);
+                System.out.println("Clash in trying locating " + name + " at index " + index);
                 index = (index + i*i) % capacity;
 
-                if (table[index].getName().equals(name) && !table[index].isDeleted()){
-                    System.out.println("Supporter " + name + " found!");
-                    return table[index];
-                }
+                if (table[index] != null) {
 
+                    if (table[index].getName().equals(name) && !table[index].isDeleted()) {
+                        System.out.println("Supporter " + name + " found with ID " + table[index].getID());
+                        System.out.println();
+                        return table[index];
+                    }
+                }
                 if (table[index] == null){
                     System.out.println("not found: " + name);
                     return null;
