@@ -9,7 +9,7 @@ package supporter;
  *
  * @author fadilafidina
  */
-public class Supporter implements ISupporter {
+public class Supporter implements ISupporter, Comparable<Supporter>  {
 
     private String ID;
     private String name;
@@ -44,7 +44,15 @@ public class Supporter implements ISupporter {
     }
 
     public void setNotDeleted() { deleted = false; }
-    
-    
-    
+
+
+    @Override
+    public int compareTo(Supporter supporter) {
+        //return this.name.compareToIgnoreCase(supporter.getName());
+        if (this.name.compareToIgnoreCase(supporter.getName()) < 0)
+            return -1;
+        if (this.name.compareToIgnoreCase(supporter.getName()) > 0)
+            return 1;
+        else return 0;
+    }
 }

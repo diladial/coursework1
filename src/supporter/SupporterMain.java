@@ -23,8 +23,8 @@ public class SupporterMain {
 
 
         //create a new database, empty
-        //SupporterDatabaseHT database = new SupporterDatabaseHT();
-        SupporterDatabaseBST database = new SupporterDatabaseBST();
+        SupporterDatabaseHT database = new SupporterDatabaseHT();
+        //SupporterDatabaseBST database = new SupporterDatabaseBST();
 
         Supporter giulia = new Supporter("123", "Giulia");
         Supporter ben = new Supporter("234", "Ben");
@@ -152,7 +152,7 @@ public class SupporterMain {
         //System.out.println("Removing supporter Giulia");
         database.remove("Giulia");
         System.out.println("Is Ben present in the database? "+ database.containsName("Ben"));
-
+        */
 
         System.out.println();
         Supporter luke = new Supporter("465","Luke");
@@ -164,16 +164,15 @@ public class SupporterMain {
         Supporter viv = new Supporter("867","Viv");
         database.put(viv);
 
-        Supporter alex1 = new Supporter("657","Alex");
-        database.put(alex1);
+        //Supporter alex1 = new Supporter("657","Alex");
+        //database.put(alex1);
 
-        database.get("Alex");
+        //database.get("Alex");
         //database.get(alex);
 
-        */
+
 
         database.printSupportersOrdered();
-        System.out.println("Size of the table is: " + database.size());
         System.out.println();
 
         database.remove("Ben");
@@ -182,10 +181,15 @@ public class SupporterMain {
         //print
         database.printSupportersOrdered();
         //System.out.println("Depth is at: " + database.depth());
-        System.out.println("Size of the table is: " + database.size());
+        //System.out.println("Size of the table is: " + database.size());
         System.out.println();
 
-        //rehash
+        /*
+        //get the boy
+        System.out.println("Can you get the supporter Green? ");
+        database.get("Green");
+        System.out.println();
+        */
 
 
 
@@ -197,6 +201,8 @@ public class SupporterMain {
         database.clear();
         database.printSupportersOrdered();
         System.out.println();
+
+
 
         //what's the depth
         //System.out.println("Depth is at: " + database.depth());

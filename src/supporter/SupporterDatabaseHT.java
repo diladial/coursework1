@@ -6,6 +6,10 @@
 package supporter;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -49,6 +53,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         for (int i = 0; i < capacity; i++) {
             table[i] = null;
         }
+        size = 0;
     }
 
     @Override
@@ -108,19 +113,19 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         else {
 
             while (!table[index].getName().equals(name)) {
-                System.out.println("Clash in trying locating " + name + " at index " + index);
+                System.out.println("Clash in trying to locate " + name + " at index " + index);
                 index = (index + i*i) % capacity;
 
                 if (table[index] != null) {
 
                     if (table[index].getName().equals(name) && !table[index].isDeleted()) {
-                        System.out.println("Supporter " + name + " found with ID " + table[index].getID());
+                        System.out.println("Supporter " + name + " found with ID " + table[index].getID() + " at index "+ index);
                         System.out.println();
                         return table[index];
                     }
                 }
                 if (table[index] == null){
-                    System.out.println("not found: " + name);
+                    System.out.println("Not found: " + name);
                     return null;
                 }
                 i++;
@@ -168,12 +173,13 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
                 if (table[index] == null) {
                     System.out.println("Found an empty space! Index is now at: " + index);
-                    System.out.println("Previous hashtable capacity: " + size());
+
+                    System.out.println("Previous hashtable size: " + size());
 
                     table[index] = supporter;
                     size++;
 
-                    System.out.println("Supporter added: " + supporter.getName());
+                    System.out.println("Supporter added: " + supporter.getName() + ", with index " + index);
                     System.out.println("New hashtable size: " + size());
                     printLoadFactor();
                     System.out.println();
@@ -181,6 +187,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
                     return supporter;
                 }
+                i++;
 
             }
             return null;
@@ -193,13 +200,16 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         int index = hash(name);
         int i = 1;
         if (table[index] == null) {
+            System.out.print("Supporter ");
             System.out.println("Supporter " + name + " not found");
+            System.out.println();
             return null;
         }
 
         else if (table[index].getName().equals(name) && !table[index].isDeleted()) {
             table[index].setDeleted();
             System.out.println("Supporter " + name + " is 'removed'!");
+            System.out.println();
             size--;
             return table[index];
         }
@@ -209,17 +219,18 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
                 System.out.println("Clash  in trying get() on " + name);
                 index = (index + i*i) % capacity;
 
-                if (table[index].getName().equals(name) && !table[index].isDeleted()){
+                if (table[index] == null){
+                    System.out.println("Not found: " + name);
+                    return null;
+                } else if (table[index].getName().equals(name) && !table[index].isDeleted()){
                     table[index].setDeleted();
                     System.out.println("Supporter " + name + " is 'removed'!");
+                    System.out.println();
                     size--;
                     return table[index];
                 }
 
-                if (table[index] == null){
-                    System.out.println("Not found: " + name);
-                    return null;
-                }
+
                 i++;
             }
         }
@@ -232,25 +243,55 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
      */
     @Override
     public void printSupportersOrdered() {
+        System.out.println("********** Printing supporters in hash table ***********");
+
         for (int i = 0; i < capacity; i++) {
             if (table[i] != null && !table[i].isDeleted()) {
-                System.out.println("Words at position " + i + ": " + table[i].getName());
+                System.out.println("Supporter at index " + i + ": " + table[i].getName());
             }
         }
+
+
+        List<Supporter> supporters = new ArrayList<>();
+
+        for (Supporter supporter : table){
+            if (supporter != null)
+            supporters.add(supporter);
+        }
+        Collections.sort(supporters);
+        System.out.println();
+        System.out.println("*********** Supporters in alphabetical order  **********");
+        for (Supporter sup : supporters) {
+            if (!sup.isDeleted())
+            System.out.println("Supporter " + sup.getName() +  " with ID " + sup.getID());
+        }
+
+        System.out.println("******************* End of hash table  *****************");
+        //System.out.println();
+        System.out.println("Size of hash table is: " + size());
+        System.out.println("Capacity of hash table is: " + capacity);
+        System.out.println("Load factor of hash table is " + formatLoadFactor());
+
     }
 
-    public double getLoadFactor() {
+    private double getLoadFactor() {
         loadFactor = ((double) size / (double) capacity);
         return loadFactor;
     }
 
-    public void printLoadFactor(){
+    private void printLoadFactor(){
         DecimalFormat df = new DecimalFormat("0.00");
         String formatted = df.format(getLoadFactor());
-        System.out.println("New load factor: " + formatted);
+        System.out.println("Load factor of the hash table is load factor: " + formatted);
     }
 
-    public void resize(){
+    private String formatLoadFactor(){
+        DecimalFormat df = new DecimalFormat("0.00");
+        String formatted = df.format(getLoadFactor());
+        return formatted;
+    }
+
+    private void resize(){
         if (getLoadFactor() > 0.75) {
             System.out.println("****** Oh no! Load factor has exceeded 75%! We must rehash! **********");
             System.out.println("**************************** REHASHING *******************************");
@@ -258,7 +299,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         }
     }
 
-    public void rehash() {
+    private void rehash() {
         Supporter[] oldTable = table;
         System.out.println("Previous capacity of table: " + capacity);
         capacity = oldTable.length * 2;
