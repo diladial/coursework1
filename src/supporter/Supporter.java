@@ -7,7 +7,7 @@ package supporter;
 
 /**
  *
- * @author fadilafidina
+ * @author 18033862
  */
 public class Supporter implements ISupporter, Comparable<Supporter>  {
 

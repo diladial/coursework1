@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  *
- * @author fadilafidina
+ * @author 18033862
  */
 public class SupporterMain {
 
@@ -33,11 +33,14 @@ public class SupporterMain {
         Supporter harry = new Supporter("567", "Harry");
         Supporter fadila = new Supporter("678","Fadila");
         Supporter gyro = new Supporter("789","Gyro");
+
+
+
         Supporter green = new Supporter("789","Green");
         Supporter gogon = new Supporter("789","Gogon");
-        //Supporter jennifer = new Supporter("345","Jennifer");
-        //Supporter chris = new Supporter("355","Chris");
-        //Supporter alice = new Supporter("355","Alice");
+        Supporter jennifer = new Supporter("345","Jennifer");
+        Supporter chris = new Supporter("355","Chris");
+        Supporter alice = new Supporter("355","Alice");
 
 
         //add these supporters to the database
@@ -48,12 +51,15 @@ public class SupporterMain {
         database.put(eric);
         database.put(harry);
         database.put(fadila);
+
+        database.printSupportersOrdered();
+
         //database.put(gogon);
         database.put(green);
-        //database.put(gyro);
-        //database.put(jennifer);
-        //database.put(chris);
-        //database.put(alice);
+        database.put(gyro);
+        database.put(jennifer);
+        database.put(chris);
+        database.put(alice);
 
 
         //print the database
@@ -137,9 +143,10 @@ public class SupporterMain {
         */
 
 
-        /*
+
         Supporter tom = new Supporter("467","Tom");
         database.put(tom);
+        /*
 
 
 
@@ -154,6 +161,7 @@ public class SupporterMain {
         System.out.println("Is Ben present in the database? "+ database.containsName("Ben"));
         */
 
+
         System.out.println();
         Supporter luke = new Supporter("465","Luke");
         database.put(luke);
@@ -163,6 +171,16 @@ public class SupporterMain {
 
         Supporter viv = new Supporter("867","Viv");
         database.put(viv);
+
+        Supporter romeo = new Supporter("863","Romeo");
+        database.put(romeo);
+
+        Supporter juliette = new Supporter("367","Juliette");
+        database.put(juliette);
+
+        Supporter maya = new Supporter("807","Maya");
+        database.put(maya);
+
 
         //Supporter alex1 = new Supporter("657","Alex");
         //database.put(alex1);
@@ -184,12 +202,29 @@ public class SupporterMain {
         //System.out.println("Size of the table is: " + database.size());
         System.out.println();
 
+        database.remove("Maya");
+        database.printSupportersOrdered();
+
+        System.out.println("Found Maya y/n? " + database.containsName("Maya"));
+        System.out.println("Found Juliette y/n? " + database.containsName("Juliette"));
+        System.out.println("Found Gyro y/n? " + database.containsName("Gyro"));
+
+        database.get("Hannah");
+        database.get("Harry");
+        database.get("Giulia");
+        database.get("Gyro");
+        database.get("Chris");
+        database.get("Does Not Exist");
+        database.get("Green");
+        database.get("Fadila");
+
         /*
         //get the boy
         System.out.println("Can you get the supporter Green? ");
         database.get("Green");
         System.out.println();
         */
+        /*
 
 
 
@@ -201,6 +236,7 @@ public class SupporterMain {
         database.clear();
         database.printSupportersOrdered();
         System.out.println();
+        */
 
 
 

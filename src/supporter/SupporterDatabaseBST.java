@@ -2,11 +2,11 @@ package supporter;
 
 /**
  *
- * @author fadilafidina
+ * @author 18033862
  */
 public class SupporterDatabaseBST implements ISupporterDatabase {
-    protected Node root;
-    protected int size;
+    private Node root;
+    private int size;
 
     public SupporterDatabaseBST() {
         root = null;
@@ -25,7 +25,7 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         return containsName(root, name);
     }
 
-    public boolean containsName(Node node, String name) {
+    private boolean containsName(Node node, String name) {
         if (node == null) {
             System.out.println("Name not in table");
             return false;
@@ -46,11 +46,11 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         if (s != null) {
             System.out.println("ID of supporter is: " + s.getID());
         }
-        System.out.println("Number of filled nodes visited: " + (numberOfNodes(root,name)));
+        System.out.println("Number of nodes visited: " + (numberOfNodes(root,name)));
         return s;
     }
 
-    public Supporter get(Node node, String name) {
+    private Supporter get(Node node, String name) {
         if (node == null) {
             System.out.println("Node not found");
             return null;
@@ -106,7 +106,7 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         root = put(root,supporter);
         System.out.println("Depth of the binary search treee is now at: " + depth());
         System.out.println("Size of binary search tree is now: " + size());
-        System.out.println("Number of filled nodes visited " + (numberOfNodes(root,supporter.getName())));
+        System.out.println("Number of nodes visited " + (numberOfNodes(root,supporter.getName())));
         System.out.println();
         return supporter;
     }
@@ -162,7 +162,7 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         System.out.println("Successfully deleted supporter " + s.getName() + " with ID " + s.getID());
         System.out.println("Depth of the binary search treee is now at: " + depth());
         System.out.println("Size of binary search tree is now: " + size());
-        System.out.println("Number of filled nodes visited " + (numberOfNodes(root,name)));
+        System.out.println("Number of nodes visited " + (numberOfNodes(root,name)));
         System.out.println();
         return s;
     }
@@ -219,7 +219,7 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         System.out.println("- - - - - -");
         System.out.println("Printing supporters: ");
         printSupporters(root);
-        System.out.println("Size of the binary search tree is now: " + size());
+        System.out.println("Size of the binary search tree is: " + size());
         System.out.println("Depth of the binary search tree is: " + depth());
         System.out.println();
     }
