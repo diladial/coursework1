@@ -28,24 +28,19 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     //load factor
     private double loadFactor = 0.0;
 
-    //constructor that takes in no params
     SupporterDatabaseHT() {
         table = new Supporter[capacity];
         clear();
     }
 
 
-    /*
-     Hash function
-     */
     private int hash(String key) {
         int y = 3;
         int hash = 0;
         for (int i = 0; i < key.length(); i++){
-            hash = i * (hash + key.charAt(i));
+            hash = y * (hash + key.charAt(i));
         }
         hash = hash % capacity;
-
         if (hash < 0){
             hash = capacity + hash;
         }
@@ -61,39 +56,28 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     }
 
     @Override
-    /*
-     returns a boolean if the name is found in hashtable
-     - get name - hashes - if not found in key, then probe - then look again
-     */
     public boolean containsName(String name) {
         int index = hash(name);
         int i = 1;
-
+        System.out.println("Trying containsName() on " + name);
         if (table[index] == null) {
             System.out.println("Name " + name + " is not in table.");
             System.out.println();
             return false;
         }
-
         if (table[index].getName().equals(name) && !table[index].isDeleted()) {
             System.out.println("The table contains name " + name);
-            System.out.println();
             return true;
         }
-
         if (table[index] != null) {
             while (table[index] != null && !table[index].getName().equals(name)) {
-
                 if (table[index] == null) { //no name has been found
                     System.out.println("Name " + name + " is not in table.");
                     System.out.println();
                     return false;
                 }
-
                 System.out.println("Clash  in trying containsName() on " + name);
-                //index = (index + i * i) % capacity;
-
-                int newIndex = 0;
+                int newIndex;
 
                 if (isOdd(i))
                     newIndex = (index + i*i) % capacity;
@@ -112,7 +96,6 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
                         System.out.println();
                         return true;
                     }
-
                     i++;
                 }
             }
@@ -129,18 +112,16 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
             System.out.println();
             return null;
         }
-
         else if (table[index].getName().equals(name) && !table[index].isDeleted()) {
             System.out.println("Supporter " + name + " found with ID " + table[index].getID());
             System.out.println();
             return table[index];
         }
         else {
-
             while (!table[index].getName().equals(name)) {
                 System.out.println("Clash in trying to locate " + name + " at index " + index);
 
-                int newIndex = 0;
+                int newIndex;
 
                 if (isOdd(i))
                     newIndex = (index + i*i) % capacity;
@@ -169,8 +150,6 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
             }
         }
         return null;
-        //condition that stops if i go to an empty slot
-        //and check and you havent looked in every single slot
     }
 
     @Override
@@ -189,16 +168,14 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         System.out.println("Adding supporter " + name + "...");
         int index = hash(name);
         int i = 1;
-
         if (table[index] == null ) {
-            System.out.println("Previous hash table capacity: " + size());
+            System.out.println("Previous hash table size: " + size());
             table[index] = supporter;
             size++;
             System.out.println("Supporter added: " + supporter.getName() + ", with index " + index);
             System.out.println("New hash table size: " + size());
             printLoadFactor();
             System.out.println();
-
             resize();
         }
 
@@ -206,9 +183,7 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         else
             while (table[index] != null){
                 System.out.println("Clash detected! Index is at: " + index);
-                int oldIndex = index;
-                int newIndex = 0;
-
+                int newIndex;
                 if (isOdd(i))
                     newIndex = (index + i*i) % capacity;
                  else
@@ -219,61 +194,52 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
                  } else {
                      index = newIndex;
                  }
-
                 if (table[index] == null) {
                     System.out.println("Found an empty space! Index is now at: " + index);
-
                     System.out.println("Previous hash table size: " + size());
-
                     table[index] = supporter;
                     size++;
-
                     System.out.println("Supporter added: " + supporter.getName() + ", with index " + index);
                     System.out.println("New hash table size: " + size());
                     printLoadFactor();
                     System.out.println();
                     resize();
-
                     return supporter;
                 }
                 i++;
-
             }
             return null;
     }
 
     private boolean isOdd(int i){
-        return i % 2 == 1;
+        return i % 2 != 0;
     }
 
     @Override
     public Supporter remove(String name) {
         System.out.println("Removing supporter " + name + "...");
-
         int index = hash(name);
         int i = 1;
         if (table[index] == null) {
             System.out.print("Supporter ");
-            System.out.println("Supporter " + name + " not found");
+            System.out.println("Supporter " + name + " not found, and not removed");
             System.out.println();
             return null;
         }
 
         else if (table[index].getName().equals(name) && !table[index].isDeleted()) {
             table[index].setDeleted();
-            System.out.println("Supporter " + name + " is 'removed'!");
-            System.out.println();
+            System.out.println("Supporter " + name + " is 'removed' from index " + index +"!");
             size--;
+            System.out.println("New hash table size: " + size());
+            printLoadFactor();
+            System.out.println();
             return table[index];
         }
         else {
-
             while (!table[index].getName().equals(name)) {
                 System.out.println("Clash  in trying get() on " + name);
-                //index = (index + i*i) % capacity;
-
                 int newIndex;
-
                 if (isOdd(i))
                     newIndex = (index + i*i) % capacity;
                 else
@@ -290,13 +256,13 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
                     return null;
                 } else if (table[index].getName().equals(name) && !table[index].isDeleted()){
                     table[index].setDeleted();
-                    System.out.println("Supporter " + name + " is 'removed'!");
+                    System.out.println("Supporter " + name + " is 'removed' from index " + index + "!");
+                    System.out.println("New hash table size: " + size());
+                    printLoadFactor();
                     System.out.println();
                     size--;
                     return table[index];
                 }
-
-
                 i++;
             }
         }
@@ -304,20 +270,14 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
 
     }
 
-    /*
-     needs to print in alpabetical order
-     */
     @Override
     public void printSupportersOrdered() {
         System.out.println("********** Printing supporters in hash table ***********");
-
         for (int i = 0; i < capacity; i++) {
             if (table[i] != null && !table[i].isDeleted()) {
                 System.out.println("Supporter at index " + i + ": " + table[i].getName());
             }
         }
-
-
         List<Supporter> supporters = new ArrayList<>();
 
         for (Supporter supporter : table){
@@ -331,13 +291,11 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
             if (!sup.isDeleted())
             System.out.println("Supporter " + sup.getName() +  " with ID " + sup.getID());
         }
-
         System.out.println("******************* End of hash table  *****************");
-        //System.out.println();
         System.out.println("Size of hash table is: " + size());
         System.out.println("Capacity of hash table is: " + capacity);
         System.out.println("Load factor of hash table is " + formatLoadFactor());
-
+        System.out.println();
     }
 
     private double getLoadFactor() {
@@ -358,8 +316,8 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
     }
 
     private void resize(){
-        if (getLoadFactor() > 0.75) {
-            System.out.println("****** Oh no! Load factor has exceeded 75%! We must rehash! **********");
+        if (getLoadFactor() > 0.50) {
+            System.out.println("****** Oh no! Load factor has exceeded 0.50! We must rehash! **********");
             System.out.println("**************************** REHASHING *******************************");
             rehash();
         }
@@ -371,10 +329,8 @@ public class SupporterDatabaseHT implements ISupporterDatabase {
         capacity = oldTable.length * 2;
         System.out.println("New capacity of table: " + capacity);
         System.out.println();
-
         table = new Supporter[capacity];
         size = 0;
-
         for (int i = 0; i < oldTable.length; i++){
             if (oldTable[i] != null && !oldTable[i].isDeleted()){
                 put(oldTable[i]);

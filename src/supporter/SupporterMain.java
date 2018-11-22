@@ -19,10 +19,6 @@ public class SupporterMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-
-
-        //create a new database, empty
         SupporterDatabaseHT database = new SupporterDatabaseHT();
         //SupporterDatabaseBST database = new SupporterDatabaseBST();
 
@@ -30,49 +26,80 @@ public class SupporterMain {
         Supporter ben = new Supporter("234", "Ben");
         Supporter alex = new Supporter("345", "Alex");
         Supporter eric = new Supporter("456", "Eric");
-        Supporter harry = new Supporter("567", "Harry");
         Supporter fadila = new Supporter("678","Fadila");
-        Supporter gyro = new Supporter("789","Gyro");
-
-
-
         Supporter green = new Supporter("789","Green");
+        Supporter harry = new Supporter("567", "Harry");
+
+        Supporter gyro = new Supporter("149","Gyro");
+
         Supporter gogon = new Supporter("789","Gogon");
         Supporter jennifer = new Supporter("345","Jennifer");
-        Supporter chris = new Supporter("355","Chris");
-        Supporter alice = new Supporter("355","Alice");
+
 
 
         //add these supporters to the database
 
+        System.out.println("Is the tree empty? " +
+                database.isEmpty());
+        System.out.println();
+
+
         database.put(giulia);
+
+        System.out.println("Is the tree empty? " +
+                database.isEmpty());
+        System.out.println();
+
         database.put(ben);
         database.put(alex);
         database.put(eric);
-        database.put(harry);
         database.put(fadila);
+        database.put(green);
+        database.put(harry);
+        database.printSupportersOrdered();
+
+        //System.out.println("Does the table contain supporter " +"FINDME? " + database.containsName("FINDME"));
+
+        database.remove("Ben");
 
         database.printSupportersOrdered();
+
+        System.out.println("Does the table contain supporter " +
+                "Harry? " + database.containsName("Harry"));
+
+
+
+
+
+
+        //database.put(harry);
+
+
+
+
+        //database.printSupportersOrdered();
 
         //database.put(gogon);
-        database.put(green);
+
+        /*
         database.put(gyro);
         database.put(jennifer);
-        database.put(chris);
-        database.put(alice);
 
 
-        //print the database
+
+        System.out.println("Can you get the supporter Green? ");
+        System.out.println("Name of supporter retrieved: " +
+                database.get("Green").getName());
+
+        //database.get("Green");
         database.printSupportersOrdered();
-        System.out.println();
 
-        //test for size()
-        System.out.println("How many things in your database? " + database.size());
-        System.out.println();
-        
-        //test for isSEmpty()
-        System.out.println("Is your database empty? " + database.isEmpty());
-        System.out.println();
+        database.clear();
+
+        */
+
+
+        /*
 
 
         //test for get()
@@ -89,7 +116,6 @@ public class SupporterMain {
         System.out.println("Can you get the supporter yellow? " + database.get("yellow"));
         System.out.println();
 
-        //database.remove("Alice");
 
 
 
@@ -108,6 +134,7 @@ public class SupporterMain {
 
         //what's the load factor - ONLY FOR HASHTABLE
         //System.out.println(database.getLoadFactor());
+        */
 
         /*
         //what's the depth
@@ -144,8 +171,7 @@ public class SupporterMain {
 
 
 
-        Supporter tom = new Supporter("467","Tom");
-        database.put(tom);
+
         /*
 
 
@@ -160,26 +186,42 @@ public class SupporterMain {
         database.remove("Giulia");
         System.out.println("Is Ben present in the database? "+ database.containsName("Ben"));
         */
+        /*
 
+
+        Supporter carter = new Supporter("467","CARTER");
+        database.put(carter);
 
         System.out.println();
-        Supporter luke = new Supporter("465","Luke");
-        database.put(luke);
+        Supporter reid = new Supporter("465","REID");
+        database.put(reid);
 
-        Supporter hannah = new Supporter("367","Hannah");
-        database.put(hannah);
 
-        Supporter viv = new Supporter("867","Viv");
-        database.put(viv);
 
-        Supporter romeo = new Supporter("863","Romeo");
-        database.put(romeo);
+        Supporter smith = new Supporter("867","SMITH");
+        database.put(smith);
 
-        Supporter juliette = new Supporter("367","Juliette");
-        database.put(juliette);
+        Supporter johnson = new Supporter("863","JOHNSON");
+        database.put(johnson);
 
-        Supporter maya = new Supporter("807","Maya");
-        database.put(maya);
+        Supporter davis = new Supporter("355","DAVIS");
+        Supporter white = new Supporter("355","WHITE");
+
+        database.put(davis);
+        database.put(white);
+
+        Supporter brookes = new Supporter("367","BROOKES");
+        database.put(brookes);
+
+        Supporter lightfoot = new Supporter("807","LIGHTFOOT");
+        database.put(lightfoot);
+        */
+
+
+
+
+
+
 
 
         //Supporter alex1 = new Supporter("657","Alex");
@@ -190,20 +232,23 @@ public class SupporterMain {
 
 
 
-        database.printSupportersOrdered();
-        System.out.println();
 
-        database.remove("Ben");
 
 
         //print
-        database.printSupportersOrdered();
+        //database.printSupportersOrdered();
         //System.out.println("Depth is at: " + database.depth());
         //System.out.println("Size of the table is: " + database.size());
-        System.out.println();
+        //System.out.println();
+        /*
 
-        database.remove("Maya");
+        database.get("Jake");
+        Supporter hannah = new Supporter("367","Hannah");
+        database.put(hannah);
+
         database.printSupportersOrdered();
+
+
 
         System.out.println("Found Maya y/n? " + database.containsName("Maya"));
         System.out.println("Found Juliette y/n? " + database.containsName("Juliette"));
@@ -217,6 +262,7 @@ public class SupporterMain {
         database.get("Does Not Exist");
         database.get("Green");
         database.get("Fadila");
+        */
 
         /*
         //get the boy
@@ -224,10 +270,10 @@ public class SupporterMain {
         database.get("Green");
         System.out.println();
         */
+
+
+
         /*
-
-
-
 
         //clearing database
         System.out.println();
@@ -237,6 +283,7 @@ public class SupporterMain {
         database.printSupportersOrdered();
         System.out.println();
         */
+
 
 
 

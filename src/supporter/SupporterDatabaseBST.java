@@ -6,18 +6,17 @@ package supporter;
  */
 public class SupporterDatabaseBST implements ISupporterDatabase {
     private Node root;
-    private int size;
 
     public SupporterDatabaseBST() {
         root = null;
-        size = 0;
-
     }
 
     @Override
     public void clear() {
+        System.out.println("Clearing BST...");
         root = null;
-        size = 0;
+        System.out.println("BST is now cleared");
+        System.out.println();
     }
 
     @Override
@@ -81,8 +80,6 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
     }
 
     private int depth(Node node) {
-        //depth is defined as number of steps it takes to get from the root to the
-        //most furthest leaf
         if (node == null) {
             return -1;
         } else {
@@ -102,7 +99,6 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
     @Override
     public Supporter put(Supporter supporter) {
         System.out.println("Adding supporter: " + supporter.getName() + ", with ID: " + supporter.getID());
-        //assign first supporter as the root supporter
         root = put(root,supporter);
         System.out.println("Depth of the binary search treee is now at: " + depth());
         System.out.println("Size of binary search tree is now: " + size());
@@ -116,7 +112,6 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
         int numberOfVisited = 0;
         if (node == null) {
             node = new Node(supporter);
-            //size++;
             System.out.println("Number of nodes visited: " + numberOfVisited);
         }
          else if (name.compareToIgnoreCase(node.getSupporter().getName()) < 0) {
@@ -142,77 +137,56 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
             return 1 + numberOfNodes(node.right, name);
         }
         return 0;
-
     }
-    
-    /*
 
-    question:
-    1- why isn't there a thing that does the .equals thing, how do we know
-    we reached the correct node? -- because we used if ELSE statements - if none equal
-    to what we were looking for, then the last one must be the node we want
-    2 - why am i getting a duplicate of a node i deleted?
-    because i did not reset the pointer before. had
-
-     */
     @Override
     public Supporter remove(String name) {
         System.out.println("Removing supporter " + name + "...");
+        int num = numberOfNodes(root,name);
         Supporter s = remove(root,name).getSupporter();
         System.out.println("Successfully deleted supporter " + s.getName() + " with ID " + s.getID());
         System.out.println("Depth of the binary search treee is now at: " + depth());
         System.out.println("Size of binary search tree is now: " + size());
-        System.out.println("Number of nodes visited " + (numberOfNodes(root,name)));
+        System.out.println("Number of nodes visited is " + num);
         System.out.println();
         return s;
     }
 
     private Node remove(Node node, String name){
-        if (node == null)
+        if (node == null) {
+            System.out.println("Node is a leaf");
             return null;
-
-        if (name.compareToIgnoreCase(node.getSupporter().getName()) < 0)
+        }
+        if (name.compareToIgnoreCase(node.getSupporter().getName()) < 0){
             node.left = remove(node.left,name);
-         else if (name.compareToIgnoreCase(node.getSupporter().getName()) > 0)
+        } else if (name.compareToIgnoreCase(node.getSupporter().getName()) > 0){
             node.right = remove(node.right,name);
-        else if (node.left != null && node.right != null){
-            //node.supporter = findMin(node.right).getSupporter(); //give the node the most right child's supporter
-            //node.right = remove(node.right,node.getSupporter().getName()); //change the link of node.right pointing to the right node
-        Node t = node;
-        node = findMin(t.right);
-        node.right = remove(node.right,node.getSupporter().getName());
-        node.left = t.left;
-
         } else {
-            if (node.left == null) {
-                node = node.right;
-            } if (node.right == null) {
-                node = node.left;
+            if (node.left == null && node.right == null){
+                System.out.println("Node is a leaf");
+                return null;
+            } else if (node.left == null && node.right != null) {
+                return node.right;
+            } else if (node.right == null && node.left != null) {
+                return node.left;
+            } else {
+                System.out.println("Node has two descendants");
+                node.supporter = findMin(node.right).getSupporter();
+                node.right = remove(node.right, node.supporter.getName());
             }
         }
         return node;
     }
 
-    private Node deleteMin(Node node) {
-        if (node.left == null)
-            return node.right;
-        node.left = deleteMin(node.left);
-        return node;
-    }
 
-    //the smallest node will always be on the very left position
-    //this is because of the properties of BSTs
-    //everything on the left is smaller than the current node,
-    //if node.left is empty then the node itself is the smallest node in that subtree
     private Node findMin(Node node){
         if(node == null)
             return null;
         else if (node.left == null)
             return node;
+        else
         return findMin(node.left);
     }
-
-
 
     @Override
     public void printSupportersOrdered() {
@@ -233,7 +207,7 @@ public class SupporterDatabaseBST implements ISupporterDatabase {
     }
 
       class Node {
-         private Supporter supporter;
+        Supporter supporter;
           Node left;
           Node right;
 
